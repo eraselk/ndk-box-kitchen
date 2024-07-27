@@ -59,16 +59,14 @@ send_msg() {
 
 send_msg "<b>BusyBox CI Triggered</b>"
 sleep 2
-send_msg "===========================
+send_msg "<b>===========================
 BB_NAME=$BB_NAME BusyBox
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
 NDK_VERSION=$NDK_VERSION
 CPU_CORES=$(nproc --all)
-==========================="
-
-START=$(date +"%s")
+===========================</b>"
 
 sudo ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 
@@ -105,15 +103,8 @@ mv -f android-ndk-$NDK_VERSION ndk
 	}
 } | tee -a "${BUILD_LOG}"
 
-END=$(date +"%s")
-DIFF=$((END - START))
-minutes=$((DIFF / 60))
-seconds=$((DIFF % 60))
-
 if [[ -f $NDK_PROJECT_PATH/$ZIP_NAME ]]; then
-	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "<b>Build took ${minutes}m ${seconds}s</b>
-#$BUILD_TYPE #${BB_NAME}BusyBox #$VERSION_CODE"
-
+	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE\n<b>$(date +"%Y"-"%m"-"%d") $(date +"%H":"%M":"%S")</b>"        
 	upload_file "$BUILD_LOG" "Build log"
 	
 else
