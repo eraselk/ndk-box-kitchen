@@ -13,7 +13,7 @@ NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
 BUILD_LOG="${NDK_PROJECT_PATH}/build.log"
 VERSION_CODE="${BB_VER//v/}"
 VERSION_CODE="${VERSION_CODE//./}"
-BUILD_SUCCESS=""
+BUILD_SUCCESS=
 
 # Export all variables
 export BB_NAME BB_VER BB_BUILDER NDK_VERSION ZIP_NAME TZ NDK_PROJECT_PATH
@@ -39,13 +39,11 @@ upload_file() {
 			-F chat_id="$CHAT_ID" \
 			-F "disable_web_page_preview=true" \
 			-F "parse_mode=html" \
-			-F caption="$caption" \
-			-o /dev/null || echo "upload_file: Can't send $file_path"
+			-F caption="$caption"
 	else
 		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
 			-F "disable_web_page_preview=true" \
-			-F chat_id="$CHAT_ID" \
-			-o /dev/null || echo "upload_file: Can't send $file_path"
+			-F chat_id="$CHAT_ID"
 	fi
 }
 
@@ -56,24 +54,22 @@ send_msg() {
 		-d chat_id="$CHAT_ID" \
 		-d "disable_web_page_preview=true" \
 		-d "parse_mode=html" \
-		-d text="$message" \
-		-o /dev/null || echo "send_msg: ERROR"
+		-d text="$message"
 }
 
 send_msg "<b>BusyBox CI Triggered</b>"
 sleep 2
-send_msg "<code>==============================
+send_msg "===========================
 BB_NAME=$BB_NAME BusyBox
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
 NDK_VERSION=$NDK_VERSION
 CPU_CORES=$(nproc --all)
-==============================</code>"
+==========================="
 
 START=$(date +"%s")
 
-sudo apt update -y && sudo apt upgrade -y
 sudo ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 
 curl -sL "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip" -o android-ndk-${NDK_VERSION}-linux.zip
@@ -91,22 +87,21 @@ mv -f android-ndk-$NDK_VERSION ndk
 	bash run.sh generate
 
 	$NDK_PROJECT_PATH/ndk/ndk-build all -j"$(nproc --all)" && {
-	git clone --depth=1 https://github.com/eraselk/busybox-template
+	    git clone --depth=1 https://github.com/eraselk/busybox-template
+	    rm -f $NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder
 
-	rm -f "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
+	    cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
+	    cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
+	    cp -f $NDK_PROJECT_PATH/libs/x86_64/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x64
+	    cp -f $NDK_PROJECT_PATH/libs/x86/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x86
 
-	cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
-	cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
-	cp -f $NDK_PROJECT_PATH/libs/x86_64/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x64
-	cp -f $NDK_PROJECT_PATH/libs/x86/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x86
+	    sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
+	    sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
 
-	sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
-	sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
-
-	cd $NDK_PROJECT_PATH/busybox-template
-	zip -r9 $ZIP_NAME *
-	mv -f $ZIP_NAME $NDK_PROJECT_PATH
-	cd $NDK_PROJECT_PATH
+	    cd $NDK_PROJECT_PATH/busybox-template
+	    zip -r9 $ZIP_NAME *
+	    mv -f $ZIP_NAME $NDK_PROJECT_PATH
+	    cd $NDK_PROJECT_PATH
 	}
 } | tee -a "${BUILD_LOG}"
 
