@@ -1,7 +1,7 @@
 From 501e9146fea1777776b862edd3af8d3ca935de73 Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Fri, 21 Jun 2024 03:09:47 -0700
-Subject: [PATCH 18/24] Allow variable page size on x64
+Subject: [PATCH 18/31] Allow variable page size on x64
 
 ---
  include/libbb.h | 2 +-

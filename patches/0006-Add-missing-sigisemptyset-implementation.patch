@@ -1,7 +1,7 @@
 From cce10cf4dc594a4ab7c17508680074f945ababdc Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Sun, 14 Jul 2024 16:55:01 -0700
-Subject: [PATCH 06/24] Add missing sigisemptyset implementation
+Subject: [PATCH 06/31] Add missing sigisemptyset implementation
 
 ---
  shell/hush.c | 9 +++++++++

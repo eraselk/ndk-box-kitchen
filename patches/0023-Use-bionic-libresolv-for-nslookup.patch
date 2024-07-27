@@ -1,7 +1,7 @@
 From ecc20518110fdd197af449f5212248ca2f904d35 Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Mon, 15 Jul 2024 17:20:17 -0700
-Subject: [PATCH 23/24] Use bionic libresolv for nslookup
+Subject: [PATCH 23/31] Use bionic libresolv for nslookup
 
 ---
  networking/bionic_resolv.h | 112 +++++++++++++++++++++++++++++++++++++

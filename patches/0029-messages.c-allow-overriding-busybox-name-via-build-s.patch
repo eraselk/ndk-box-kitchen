@@ -1,0 +1,31 @@
+From 86e69606c862ff69ee142dd61b4621677ec953d5 Mon Sep 17 00:00:00 2001
+From: remoi <remoi@xontolodon.me>
+Date: Mon, 1 Jul 2024 11:24:29 +0800
+Subject: [PATCH 29/31] messages.c: allow overriding busybox name via build
+ script
+
+---
+ libbb/messages.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/libbb/messages.c b/libbb/messages.c
+index 0e28b3b..ce1a56b 100644
+--- a/libbb/messages.c
++++ b/libbb/messages.c
+@@ -14,7 +14,12 @@
+ #define BB_BUILDER "nobody@ydobon"
+ #endif
+ 
+-const char bb_banner[] ALIGN1 = "Enhanced BusyBox " BB_VER " ("BB_BUILDER")" " ("BB_EXTRA_VERSION")" "\n";
++/* allow overriding busybox name */
++#ifndef BB_NAME
++#define BB_NAME ""
++#endif
++
++const char bb_banner[] ALIGN1 = BB_NAME " BusyBox " BB_VER " ("BB_BUILDER")" " ("BB_EXTRA_VERSION")" "\n";
+ 
+ 
+ const char bb_msg_memory_exhausted[] ALIGN1 = "out of memory";
+-- 
+2.45.2
+

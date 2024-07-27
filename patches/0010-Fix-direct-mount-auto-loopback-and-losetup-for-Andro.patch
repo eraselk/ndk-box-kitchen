@@ -1,7 +1,7 @@
 From 4530fad34caf60516e0fcf2ad5f0f2ded9251b60 Mon Sep 17 00:00:00 2001
 From: Chris Renshaw <osm0sis@outlook.com>
 Date: Wed, 24 May 2023 14:15:00 -0300
-Subject: [PATCH 10/24] Fix direct mount auto loopback and losetup for Android
+Subject: [PATCH 10/31] Fix direct mount auto loopback and losetup for Android
 
 ---
  include/libbb.h | 12 +++++++++---

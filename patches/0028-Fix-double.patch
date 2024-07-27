@@ -1,0 +1,25 @@
+From 0622c3e19b6178389544196f6325eeb435ce820d Mon Sep 17 00:00:00 2001
+From: Your Name <you@example.com>
+Date: Sun, 30 Jun 2024 21:38:41 +0800
+Subject: [PATCH 28/31] Fix double
+
+---
+ libbb/messages.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libbb/messages.c b/libbb/messages.c
+index d1039af..0e28b3b 100644
+--- a/libbb/messages.c
++++ b/libbb/messages.c
+@@ -14,7 +14,7 @@
+ #define BB_BUILDER "nobody@ydobon"
+ #endif
+ 
+-const char bb_banner[] ALIGN1 = "Enhanced BusyBox v" BB_VER " ("BB_BUILDER")" " ("BB_EXTRA_VERSION")" "\n";
++const char bb_banner[] ALIGN1 = "Enhanced BusyBox " BB_VER " ("BB_BUILDER")" " ("BB_EXTRA_VERSION")" "\n";
+ 
+ 
+ const char bb_msg_memory_exhausted[] ALIGN1 = "out of memory";
+-- 
+2.45.2
+

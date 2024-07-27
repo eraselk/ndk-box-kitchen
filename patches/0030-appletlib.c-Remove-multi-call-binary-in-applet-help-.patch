@@ -1,0 +1,25 @@
+From bf90ada951a1e3d5a5cdd0fc4f4274997e706757 Mon Sep 17 00:00:00 2001
+From: rm -rf / <you@example.com>
+Date: Mon, 1 Jul 2024 19:38:41 +0800
+Subject: [PATCH 30/31] appletlib.c: Remove "multi-call binary" in applet help
+ usage
+
+---
+ libbb/appletlib.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/libbb/appletlib.c b/libbb/appletlib.c
+index fdad066..4ffdb8c 100644
+--- a/libbb/appletlib.c
++++ b/libbb/appletlib.c
+@@ -154,7 +154,6 @@ void FAST_FUNC bb_show_usage(void)
+ 			ap--;
+ 		}
+ 		full_write2_str(bb_banner);
+-		full_write2_str(" multi-call binary.\n"); /* common string */
+ 		if (*p == '\b')
+ 			full_write2_str("\nNo help available\n");
+ 		else {
+-- 
+2.45.2
+

@@ -1,0 +1,24 @@
+From af5709aa4208e309d352ba412443b6e80ecd9410 Mon Sep 17 00:00:00 2001
+From: Your Name <you@example.com>
+Date: Sun, 30 Jun 2024 17:50:02 +0800
+Subject: [PATCH 26/31] Update
+
+---
+ libbb/appletlib.c | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/libbb/appletlib.c b/libbb/appletlib.c
+index 7cd9984..fdad066 100644
+--- a/libbb/appletlib.c
++++ b/libbb/appletlib.c
+@@ -778,7 +778,6 @@ int busybox_main(int argc UNUSED_PARAM, char **argv)
+ 
+ 		dup2(1, 2);
+ 		full_write2_str(bb_banner); /* reuse const string */
+-		full_write2_str(" multi-call binary.\n"); /* reuse */
+ 		full_write2_str(
+ 			"\n"
+ 			"Usage: busybox [function [arguments]...]\n"
+-- 
+2.45.2
+
