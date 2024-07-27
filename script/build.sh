@@ -3,7 +3,7 @@
 # Define variables
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.1"
-BUILD_TYPE="BETA"
+BUILD_TYPE="Release Candidate"
 BB_BUILDER="eraselk@gacorprjkt"
 NDK_VERSION="r27"
 RUN_ID=${GITHUB_RUN_ID:-"local"}
