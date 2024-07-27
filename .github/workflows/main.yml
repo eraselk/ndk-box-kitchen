@@ -1,7 +1,6 @@
 name: Build Busybox
 
 on:
-  push:
   workflow_dispatch:
 
 defaults:

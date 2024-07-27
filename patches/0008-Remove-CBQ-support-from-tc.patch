@@ -1,7 +1,7 @@
 From c6156212bfabac022bbbeba657f8604e6d503540 Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Mon, 15 Jul 2024 18:50:57 -0700
-Subject: [PATCH 08/31] Remove CBQ support from tc
+Subject: [PATCH 08/30] Remove CBQ support from tc
 
 CBQ support is removed from Linux.
 More info: https://bugs.busybox.net/show_bug.cgi?id=15931

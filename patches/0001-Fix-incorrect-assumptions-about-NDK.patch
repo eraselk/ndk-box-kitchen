@@ -1,7 +1,7 @@
 From 1cfefbd1718319d1d94e9eecf8b96bbb1215c2ed Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Sat, 13 Jul 2024 18:26:16 -0700
-Subject: [PATCH 01/31] Fix incorrect assumptions about NDK
+Subject: [PATCH 01/30] Fix incorrect assumptions about NDK
 
 ---
  include/platform.h       |  5 ++++-

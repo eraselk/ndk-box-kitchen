@@ -1,7 +1,7 @@
 From a8da891da815f5c2a8836ebcc9918f2e2c209565 Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Fri, 7 Feb 2020 14:32:06 -0800
-Subject: [PATCH 15/31] Add runtime toggle to enable standalone ash
+Subject: [PATCH 15/30] Add runtime toggle to enable standalone ash
 
 ---
  shell/ash.c | 42 ++++++++++++++++++++++++------------------

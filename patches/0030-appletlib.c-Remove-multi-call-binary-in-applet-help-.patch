@@ -1,7 +1,7 @@
 From bf90ada951a1e3d5a5cdd0fc4f4274997e706757 Mon Sep 17 00:00:00 2001
 From: rm -rf / <you@example.com>
 Date: Mon, 1 Jul 2024 19:38:41 +0800
-Subject: [PATCH 30/31] appletlib.c: Remove "multi-call binary" in applet help
+Subject: [PATCH 30/30] appletlib.c: Remove "multi-call binary" in applet help
  usage
 
 ---

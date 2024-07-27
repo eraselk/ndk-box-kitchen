@@ -1,7 +1,7 @@
 From 0ec5c81db656d5e161590cd884de17cd794b253c Mon Sep 17 00:00:00 2001
 From: Your Name <you@example.com>
 Date: Sun, 30 Jun 2024 17:25:00 +0800
-Subject: [PATCH 25/31] Update
+Subject: [PATCH 25/30] Update
 
 ---
  libbb/appletlib.c | 3 ---

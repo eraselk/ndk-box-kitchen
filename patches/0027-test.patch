@@ -1,7 +1,7 @@
 From 246a0439ddd6f7f339ee4e4fb2ba68c5584ee4b4 Mon Sep 17 00:00:00 2001
 From: Your Name <you@example.com>
 Date: Sun, 30 Jun 2024 21:34:40 +0800
-Subject: [PATCH 27/31] test
+Subject: [PATCH 27/30] test
 
 ---
  libbb/messages.c | 11 +++++++----

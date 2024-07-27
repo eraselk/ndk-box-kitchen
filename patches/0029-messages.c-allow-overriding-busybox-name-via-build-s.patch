@@ -1,7 +1,7 @@
 From 86e69606c862ff69ee142dd61b4621677ec953d5 Mon Sep 17 00:00:00 2001
 From: remoi <remoi@xontolodon.me>
 Date: Mon, 1 Jul 2024 11:24:29 +0800
-Subject: [PATCH 29/31] messages.c: allow overriding busybox name via build
+Subject: [PATCH 29/30] messages.c: allow overriding busybox name via build
  script
 
 ---

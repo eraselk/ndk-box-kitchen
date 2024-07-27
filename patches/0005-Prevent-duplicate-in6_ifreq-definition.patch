@@ -1,7 +1,7 @@
 From 2d66637ff2df9760136f15048bd6ca2fc4ecf82b Mon Sep 17 00:00:00 2001
 From: topjohnwu <topjohnwu@gmail.com>
 Date: Sun, 14 Jul 2024 16:54:36 -0700
-Subject: [PATCH 05/31] Prevent duplicate in6_ifreq definition
+Subject: [PATCH 05/30] Prevent duplicate in6_ifreq definition
 
 ---
  networking/ifconfig.c  | 8 --------
