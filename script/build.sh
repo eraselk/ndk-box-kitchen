@@ -2,8 +2,8 @@
 
 # Define variables
 BB_NAME="Enhanced"
-BB_VER="v1.37.0.1"
-BUILD_TYPE="Release"
+BB_VER="v1.37.0.2"
+BUILD_TYPE="dev"
 BB_BUILDER="eraselk@gacorprjkt"
 NDK_VERSION="r27"
 RUN_ID=${GITHUB_RUN_ID:-"local"}
@@ -60,7 +60,7 @@ send_msg() {
 send_msg "<b>BusyBox CI Triggered</b>"
 sleep 2
 send_msg "<b>===========================
-BB_NAME=$BB_NAME BusyBox
+BB_NAME=$BB_NAME
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
@@ -104,7 +104,7 @@ mv -f android-ndk-$NDK_VERSION ndk
 } | tee -a "${BUILD_LOG}"
 
 if [[ -f $NDK_PROJECT_PATH/$ZIP_NAME ]]; then
-    upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y-%m-%d %H:%M")</b>")"
+    upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #v$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y-%m-%d %H:%M")</b>")"
     upload_file "$BUILD_LOG" "Build log"
 else
     upload_file "$BUILD_LOG" "<b>Build failed</b>"
