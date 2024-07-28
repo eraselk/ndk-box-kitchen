@@ -104,7 +104,7 @@ mv -f android-ndk-$NDK_VERSION ndk
 } | tee -a "${BUILD_LOG}"
 
 if [[ -f $NDK_PROJECT_PATH/$ZIP_NAME ]]; then
-	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE #$(date +%Y%m%d)$(date +%H%M%S)"        
+	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y"-"%m"-"%d") $(date +"%H":"%M")""        
 	upload_file "$BUILD_LOG" "Build log"
 	
 else
