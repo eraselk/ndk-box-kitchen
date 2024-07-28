@@ -20,41 +20,41 @@ export BB_NAME BB_VER BB_BUILDER NDK_VERSION ZIP_NAME TZ NDK_PROJECT_PATH
 
 # Check if TOKEN is set
 if [[ -z "$TOKEN" ]]; then
-	echo "Error: Variable TOKEN not defined"
-	exit 1
+    echo "Error: Variable TOKEN not defined"
+    exit 1
 fi
 
 # Check if CHAT_ID is set
 if [[ -z "$CHAT_ID" ]]; then
-	echo "Error: Variable CHAT_ID not defined"
-	exit 1
+    echo "Error: Variable CHAT_ID not defined"
+    exit 1
 fi
 
 upload_file() {
-	local file_path="$1"
-	local caption="$2"
+    local file_path="$1"
+    local caption="$2"
 
-	if [[ -n "$caption" ]]; then
-		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
-			-F chat_id="$CHAT_ID" \
-			-F "disable_web_page_preview=true" \
-			-F "parse_mode=html" \
-			-F caption="$caption"
-	else
-		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
-			-F "disable_web_page_preview=true" \
-			-F chat_id="$CHAT_ID"
-	fi
+    if [[ -n "$caption" ]]; then
+        curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
+            -F chat_id="$CHAT_ID" \
+            -F "disable_web_page_preview=true" \
+            -F "parse_mode=html" \
+            -F caption="$caption"
+    else
+        curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
+            -F "disable_web_page_preview=true" \
+            -F chat_id="$CHAT_ID"
+    fi
 }
 
 send_msg() {
-	local message="$1"
+    local message="$1"
 
-	curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
-		-d chat_id="$CHAT_ID" \
-		-d "disable_web_page_preview=true" \
-		-d "parse_mode=html" \
-		-d text="$message"
+    curl -s -X POST "https://api.telegram.org/bot${TOKEN}/sendMessage" \
+        -d chat_id="$CHAT_ID" \
+        -d "disable_web_page_preview=true" \
+        -d "parse_mode=html" \
+        -d text="$message"
 }
 
 send_msg "<b>BusyBox CI Triggered</b>"
@@ -76,37 +76,36 @@ rm -f android-ndk-$NDK_VERSION-linux.zip
 mv -f android-ndk-$NDK_VERSION ndk
 
 {
-	git clone --depth=1 https://github.com/eraselk/busybox
-	git clone --depth=1 https://android.googlesource.com/platform/external/selinux jni/selinux
-	git clone --depth=1 https://android.googlesource.com/platform/external/pcre jni/pcre
+    git clone --depth=1 https://github.com/eraselk/busybox
+    git clone --depth=1 https://android.googlesource.com/platform/external/selinux jni/selinux
+    git clone --depth=1 https://android.googlesource.com/platform/external/pcre jni/pcre
 
-	[[ ! -x "run.sh" ]] && chmod +x run.sh
+    [[ ! -x "run.sh" ]] && chmod +x run.sh
 
-	bash run.sh generate
+    bash run.sh generate
 
-	$NDK_PROJECT_PATH/ndk/ndk-build all -j"$(nproc --all)" && {
-	    git clone --depth=1 https://github.com/eraselk/busybox-template
-	    rm -f $NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder
+    $NDK_PROJECT_PATH/ndk/ndk-build all -j"$(nproc --all)" && {
+        git clone --depth=1 https://github.com/eraselk/busybox-template
+        rm -f $NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder
 
-	    cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
-	    cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
-	    cp -f $NDK_PROJECT_PATH/libs/x86_64/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x64
-	    cp -f $NDK_PROJECT_PATH/libs/x86/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x86
+        cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
+        cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
+        cp -f $NDK_PROJECT_PATH/libs/x86_64/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x64
+        cp -f $NDK_PROJECT_PATH/libs/x86/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x86
 
-	    sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
-	    sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
+        sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
+        sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
 
-	    cd $NDK_PROJECT_PATH/busybox-template
-	    zip -r9 $ZIP_NAME *
-	    mv -f $ZIP_NAME $NDK_PROJECT_PATH
-	    cd $NDK_PROJECT_PATH
-	}
+        cd $NDK_PROJECT_PATH/busybox-template
+        zip -r9 $ZIP_NAME *
+        mv -f $ZIP_NAME $NDK_PROJECT_PATH
+        cd $NDK_PROJECT_PATH
+    }
 } | tee -a "${BUILD_LOG}"
 
 if [[ -f $NDK_PROJECT_PATH/$ZIP_NAME ]]; then
-	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y"-"%m"-"%d") $(date +"%H":"%M")""        
-	upload_file "$BUILD_LOG" "Build log"
-	
+    upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y-%m-%d %H:%M")</b>")"
+    upload_file "$BUILD_LOG" "Build log"
 else
-	upload_file "$BUILD_LOG" "<b>Build failed after ${minutes}m ${seconds}s</b>"
+    upload_file "$BUILD_LOG" "<b>Build failed</b>"
 fi
