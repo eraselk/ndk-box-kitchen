@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -x
 vars=(
 	BB_NAME="Enhanced"
 	BB_VER="v1.37.0.2"
