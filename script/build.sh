@@ -7,10 +7,10 @@ BB_BUILDER="eraselk@gacorprjkt"
 VERSION_CODE="${BB_VER//v/}"
 VERSION_CODE="${VERSION_CODE//./}"
 
-NDK_STABLE="0"
+NDK_STABLE="1"
 NDK_STABLE_VERSION="r27"
-NDK_CANARY="1"
-NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/android-ndk-12157434/android-ndk-12157434-linux-x86_64.zip"
+NDK_CANARY="0"
+NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
 
 RUN_ID="${GITHUB_RUN_ID:-local}"
 ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
