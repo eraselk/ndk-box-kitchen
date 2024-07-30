@@ -104,8 +104,6 @@ fi
 
 		cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
 		cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
-		cp -f $NDK_PROJECT_PATH/libs/x86_64/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x64
-		cp -f $NDK_PROJECT_PATH/libs/x86/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-x86
 
 		sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
 		sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
