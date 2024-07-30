@@ -84,7 +84,7 @@ if [[ $NDK_STABLE -eq 1 ]]; then
 	rm -f "android-ndk-${NDK_VERSION}-linux.zip"
 	mv "android-ndk-${NDK_VERSION}" ndk
 elif [[ $NDK_CANARY -eq 1 ]]; then
-	wget -q "$NDK_CANARY_LINK" -O nd of ndk-tarball
+	wget -q "$NDK_CANARY_LINK" -O ndk-tarball
 	unzip -q ndk-tarball
 	rm -f ndk-tarball
 	mv android-ndk-* ndk
