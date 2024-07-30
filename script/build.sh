@@ -10,8 +10,8 @@ vars=(
 	NDK_STABLE=0
 	NDK_STABLE_VERSION="r27"
 	NDK_CANARY=1
-	NDK_CANARY_LINK='https://storage.googleapis.com/android-build/builds/aosp-master-ndk-linux-linux/12156102/dc56b824af8f420690045102aaf66937e2feedbcdb482507b833862d9d509d1d/android-ndk-12156102-linux-x86_64.zip?GoogleAccessId=gcs-sign%40android-builds-project.google.com.iam.gserviceaccount.com&Expires=1722340746&Signature=L3qsi1Rs%2Fjk1NtN63bLeQy1yvGx3FbB4kTZQBOT8kL5kiicOLsOLYnf0T9EMLyjzTN621cSpaCT%2FZyv45J%2BsafEaEN2ra76HOUo0TpkJXBMo8LDC3TJosiNPQ6NzaYT9XvPnsJBs4XC5OE5pZMAstOg9uL9%2F%2F%2BN1wH4J5F4A2kP%2BEzU%2BSQZ%2F3BQqnnh0Dul%2BtdMc29sCVsfZUEt5qERTDY58jcR%2BGeySw9id6rPZ0rG38eEhg0zr98wxs1shoMtPRoOQVmoMZlw%2FfTl%2BusTGeord0OHzjRqdOp4dnCThiJq7FI62%2BSWX8n4a5T4z%2BvaDk1NRGWO3PGbnPmImBbzbzQ%3D%3D&response-content-disposition=attachment'
-
+	NDK_CANARY_LINK='https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip'
+	
 	RUN_ID=${GITHUB_RUN_ID:-"local"}
 	ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
 	TZ="Asia/Makassar"
@@ -71,8 +71,7 @@ BB_NAME=$BB_NAME
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
-NDK_STABLE=$NDK_STABLE
-$(if [[ $NDK_STABLE -eq 1 ]]; then echo "NDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
+NDK_STABLE=$NDK_STABLE $(if [[ $NDK_STABLE -eq 1 ]]; then echo "\nNDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
 NDK_CANARY=$NDK_CANARY
 ===========================</b>"
 
