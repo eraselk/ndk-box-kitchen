@@ -1,30 +1,26 @@
 #!/bin/bash
 set -x
-vars=(
-	"BB_NAME=Enhanced"
-	"BB_VER=v1.37.0.2"
-	"BUILD_TYPE=dev"
-	"BB_BUILDER=eraselk@gacorprjkt"
-	"VERSION_CODE=${BB_VER//v/}"
-	"VERSION_CODE=${VERSION_CODE//./}"
+BB_NAME="Enhanced"
+BB_VER="v1.37.0.2"
+BUILD_TYPE="dev"
+BB_BUILDER="eraselk@gacorprjkt"
+VERSION_CODE="${BB_VER//v/}"
+VERSION_CODE="${VERSION_CODE//./}"
 
-	"NDK_STABLE=0"
-	"NDK_STABLE_VERSION=r27"
-	"NDK_CANARY=1"
-	"NDK_CANARY_LINK=https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
+NDK_STABLE="0"
+NDK_STABLE_VERSION="r27"
+NDK_CANARY="1"
+NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
 
-	"RUN_ID=${GITHUB_RUN_ID:-local}"
-	"ZIP_NAME=${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
-	"TZ=Asia/Makassar"
-	"NDK_PROJECT_PATH=/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
-	"BUILD_LOG=${NDK_PROJECT_PATH}/build.log"
-	"BUILD_SUCCESS="
-)
+RUN_ID="${GITHUB_RUN_ID:-local}"
+ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
+TZ="Asia/Makassar"
+NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
+BUILD_LOG="${NDK_PROJECT_PATH}/build.log"
+BUILD_SUCCESS=""
 
 # Export all variables
-for var in "${vars[@]}"; do
-	export "$var"
-done
+export BB_NAME BB_VER BUILD_TYPE BB_BUILDER VERSION_CODE NDK_STABLE NDK_STABLE_VERSION NDK_CANARY NDK_CANARY_LINK RUN_ID ZIP_NAME TZ NDK_PROJECT_PATH BUILD_LOG BUILD_SUCCESS
 
 # Check if TOKEN is set
 if [[ -z $TOKEN ]]; then
