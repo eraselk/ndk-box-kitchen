@@ -1,5 +1,5 @@
 #!/bin/bash
-
+set -x
 vars=(
 	"BB_NAME=Enhanced"
 	"BB_VER=v1.37.0.2"
@@ -81,12 +81,12 @@ sudo ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 if [[ $NDK_STABLE -eq 1 ]]; then
 	wget -q "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip" -O "android-ndk-${NDK_VERSION}-linux.zip"
 	unzip -q "android-ndk-${NDK_VERSION}-linux.zip"
-	rm -f "android-ndk-${NDK_VERSION}-linux.zip"
+	rm "android-ndk-${NDK_VERSION}-linux.zip"
 	mv "android-ndk-${NDK_VERSION}" ndk
 elif [[ $NDK_CANARY -eq 1 ]]; then
 	wget -q "$NDK_CANARY_LINK" -O ndk-tarball
 	unzip -q ndk-tarball
-	rm -f ndk-tarball
+	rm ndk-tarball
 	mv android-ndk-* ndk
 fi
 
@@ -101,10 +101,10 @@ fi
 
 	"$NDK_PROJECT_PATH/ndk/ndk-build" all -j"$(nproc --all)" && {
 		git clone --depth=1 https://github.com/eraselk/busybox-template
-		rm -f "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
+		rm "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
 
-		cp -f "$NDK_PROJECT_PATH/libs/arm64-v8a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64"
-		cp -f "$NDK_PROJECT_PATH/libs/armeabi-v7a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm"
+		cp "$NDK_PROJECT_PATH/libs/arm64-v8a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64"
+		cp "$NDK_PROJECT_PATH/libs/armeabi-v7a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm"
 
 		sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" "$NDK_PROJECT_PATH/busybox-template/module.prop"
 		sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" "$NDK_PROJECT_PATH/busybox-template/module.prop"
