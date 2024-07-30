@@ -1,28 +1,29 @@
 #!/bin/bash
-vars=(
-	BB_NAME="Enhanced"
-	BB_VER="v1.37.0.2"
-	BUILD_TYPE="dev"
-	BB_BUILDER="eraselk@gacorprjkt"
-	VERSION_CODE="${BB_VER//v/}"
-	VERSION_CODE="${VERSION_CODE//./}"
 
-	NDK_STABLE=0
-	NDK_STABLE_VERSION="r27"
-	NDK_CANARY=1
-	NDK_CANARY_LINK='https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip'
-	
-	RUN_ID=${GITHUB_RUN_ID:-"local"}
-	ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
-	TZ="Asia/Makassar"
-	NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
-	BUILD_LOG="${NDK_PROJECT_PATH}/build.log"
-	BUILD_SUCCESS=
+vars=(
+	"BB_NAME=Enhanced"
+	"BB_VER=v1.37.0.2"
+	"BUILD_TYPE=dev"
+	"BB_BUILDER=eraselk@gacorprjkt"
+	"VERSION_CODE=${BB_VER//v/}"
+	"VERSION_CODE=${VERSION_CODE//./}"
+
+	"NDK_STABLE=0"
+	"NDK_STABLE_VERSION=r27"
+	"NDK_CANARY=1"
+	"NDK_CANARY_LINK=https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
+
+	"RUN_ID=${GITHUB_RUN_ID:-local}"
+	"ZIP_NAME=${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
+	"TZ=Asia/Makassar"
+	"NDK_PROJECT_PATH=/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
+	"BUILD_LOG=${NDK_PROJECT_PATH}/build.log"
+	"BUILD_SUCCESS="
 )
 
 # Export all variables
-for var in ${vars[@]}; do
-	export $var
+for var in "${vars[@]}"; do
+	export "$var"
 done
 
 # Check if TOKEN is set
@@ -45,7 +46,7 @@ upload_file() {
 		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
 			-F chat_id="$CHAT_ID" \
 			-F "disable_web_page_preview=true" \
-			-F "parse_mode=html" \
+			-F "parse_mode=``html" \
 			-F caption="$caption"
 	else
 		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
@@ -78,15 +79,15 @@ NDK_CANARY=$NDK_CANARY
 sudo ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 
 if [[ $NDK_STABLE -eq 1 ]]; then
-	wget -q "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip" -O android-ndk-${NDK_VERSION}-linux.zip
-	unzip -q android-ndk-$NDK_VERSION-linux.zip
-	rm -f android-ndk-$NDK_VERSION-linux.zip
-	mv -f android-ndk-$NDK_VERSION ndk
+	wget -q "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip" -O "android-ndk-${NDK_VERSION}-linux.zip"
+	unzip -q "android-ndk-${NDK_VERSION}-linux.zip"
+	rm -f "android-ndk-${NDK_VERSION}-linux.zip"
+	mv "android-ndk-${NDK_VERSION}" ndk
 elif [[ $NDK_CANARY -eq 1 ]]; then
-	wget -q "$NDK_CANARY_LINK" -O ndk-tarball
+	wget -q "$NDK_CANARY_LINK" -O nd of ndk-tarball
 	unzip -q ndk-tarball
 	rm -f ndk-tarball
-	mv -f android-ndk-* ndk
+	mv android-ndk-* ndk
 fi
 
 {
@@ -98,24 +99,24 @@ fi
 
 	bash run.sh generate
 
-	$NDK_PROJECT_PATH/ndk/ndk-build all -j"$(nproc --all)" && {
+	"$NDK_PROJECT_PATH/ndk/ndk-build" all -j"$(nproc --all)" && {
 		git clone --depth=1 https://github.com/eraselk/busybox-template
-		rm -f $NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder
+		rm -f "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
 
-		cp -f $NDK_PROJECT_PATH/libs/arm64-v8a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64
-		cp -f $NDK_PROJECT_PATH/libs/armeabi-v7a/busybox $NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm
+		cp -f "$NDK_PROJECT_PATH/libs/arm64-v8a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64"
+		cp -f "$NDK_PROJECT_PATH/libs/armeabi-v7a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm"
 
-		sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" $NDK_PROJECT_PATH/busybox-template/module.prop
-		sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" $NDK_PROJECT_PATH/busybox-template/module.prop
+		sed -i "s/version=.*/version=$BB_VER-$RUN_ID/" "$NDK_PROJECT_PATH/busybox-template/module.prop"
+		sed -i "s/versionCode=.*/versionCode=$VERSION_CODE/" "$NDK_PROJECT_PATH/busybox-template/module.prop"
 
-		cd $NDK_PROJECT_PATH/busybox-template
-		zip -r9 $ZIP_NAME *
-		mv -f $ZIP_NAME $NDK_PROJECT_PATH
-		cd $NDK_PROJECT_PATH
+		cd "$NDK_PROJECT_PATH/busybox-template"
+		zip -r9 "$ZIP_NAME" *
+		mv "$ZIP_NAME" "$NDK_PROJECT_PATH"
+		cd "$NDK_PROJECT_PATH"
 	}
 } | tee -a "${BUILD_LOG}"
 
-if [[ -f $NDK_PROJECT_PATH/$ZIP_NAME ]]; then
+if [[ -f "$NDK_PROJECT_PATH/$ZIP_NAME" ]]; then
 	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #v$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y-%m-%d %H:%M")</b>")"
 	upload_file "$BUILD_LOG" "Build log"
 else
