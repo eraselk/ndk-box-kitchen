@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 vars=(
 	BB_NAME="Enhanced"
 	BB_VER="v1.37.0.2"
@@ -71,8 +72,7 @@ BB_NAME=$BB_NAME
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
-NDK_STABLE=$NDK_STABLE
-$(if [[ $NDK_STABLE -eq 1 ]]; then echo "NDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
+NDK_STABLE=$NDK_STABLE $(if [[ $NDK_STABLE -eq 1 ]]; then echo -e "\nNDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
 NDK_CANARY=$NDK_CANARY
 ===========================</b>"
 
