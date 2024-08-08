@@ -1,4 +1,6 @@
 #!/bin/bash
+set +e
+
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.2"
 BUILD_TYPE="dev"
@@ -6,9 +8,13 @@ BB_BUILDER="eraselk@gacorprjkt"
 VERSION_CODE="${BB_VER//v/}"
 VERSION_CODE="${VERSION_CODE//./}"
 
-NDK_STABLE="1"
+# set 'true' if you wanna use the stable version of ndk
+NDK_STABLE=true
 NDK_STABLE_VERSION="r27"
-NDK_CANARY="0"
+
+# set 'true' if you wanna use the canary version of ndk
+NDK_CANARY=false
+# TIP: you can replace this ndk canary with your own ndk canary.
 NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
 
 RUN_ID="${GITHUB_RUN_ID:-local}"
@@ -67,18 +73,18 @@ BB_NAME=$BB_NAME
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
 BB_BUILDER=$BB_BUILDER
-NDK_STABLE=$NDK_STABLE $(if [[ $NDK_STABLE -eq 1 ]]; then echo "\nNDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
+NDK_STABLE=$NDK_STABLE $(if $NDK_STABLE; then echo -e "\nNDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
 NDK_CANARY=$NDK_CANARY
 ===========================</b>"
 
 sudo ln -sf "/usr/share/zoneinfo/${TZ}" /etc/localtime
 
-if [[ $NDK_STABLE -eq 1 ]]; then
-	wget -q "https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux.zip" -O "android-ndk-${NDK_VERSION}-linux.zip"
-	unzip -q "android-ndk-${NDK_VERSION}-linux.zip"
-	rm "android-ndk-${NDK_VERSION}-linux.zip"
-	mv "android-ndk-${NDK_VERSION}" ndk
-elif [[ $NDK_CANARY -eq 1 ]]; then
+if $NDK_STABLE; then
+	wget -q "https://dl.google.com/android/repository/android-ndk-${NDK_STABLE_VERSION}-linux.zip" -O "android-ndk-${NDK_STABLE_VERSION}-linux.zip"
+	unzip -q "android-ndk-${NDK_STABLE_VERSION}-linux.zip"
+	rm "android-ndk-${NDK_STABLE_VERSION}-linux.zip"
+	mv "android-ndk-${NDK_STABLE_VERSION}" ndk
+elif $NDK_CANARY; then
 	wget -q "$NDK_CANARY_LINK" -O ndk-tarball
 	unzip -q ndk-tarball
 	rm ndk-tarball
@@ -97,7 +103,7 @@ fi
 	"$NDK_PROJECT_PATH/ndk/ndk-build" all -j"$(nproc --all)" && {
 		git clone --depth=1 https://github.com/eraselk/busybox-template
 		rm "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
-
+    
 		cp "$NDK_PROJECT_PATH/libs/arm64-v8a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64"
 		cp "$NDK_PROJECT_PATH/libs/armeabi-v7a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm"
 
