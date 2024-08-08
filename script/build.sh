@@ -1,5 +1,4 @@
 #!/bin/bash
-set -x
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.2"
 BUILD_TYPE="dev"
