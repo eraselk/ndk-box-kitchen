@@ -45,6 +45,8 @@ set_tz_to() {
 
 set_tz_to "Asia/Makassar"
 
+NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
+
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.2"
 BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
@@ -60,7 +62,6 @@ NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-can
 NDK_STABLE=true
 NDK_STABLE_VERSION="r27"
 
-NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
 RUN_ID="${GITHUB_RUN_ID:-local}"
 
 VERSION_CODE="${BB_VER//v/}"
