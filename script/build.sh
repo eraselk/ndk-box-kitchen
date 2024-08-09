@@ -72,7 +72,7 @@ send_msg "<b>===========================
 BB_NAME=$BB_NAME
 BB_VERSION=$BB_VER
 BUILD_TYPE=$BUILD_TYPE
-BB_BUILDER=$BB_BUILDER
+BB_TIME_STAMP=$BB_TIME_STAMP
 NDK_STABLE=$NDK_STABLE $(if $NDK_STABLE; then echo -e "\nNDK_STABLE_VERSION=$NDK_STABLE_VERSION"; fi)
 NDK_CANARY=$NDK_CANARY
 ===========================</b>"
