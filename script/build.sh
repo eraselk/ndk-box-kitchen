@@ -29,7 +29,7 @@ send_msg() {
 
 set_tz_to() {
     TZ="$1"
-    if [[ -n "$TZ" -a -n "$2" ]]; then
+    if [[ -n "$TZ" ]] && [[ -n "$2" ]]; then
         echo "set_tz(): Max 1 Argument"
         exit 1
     elif [[ -z "$TZ" ]]; then
