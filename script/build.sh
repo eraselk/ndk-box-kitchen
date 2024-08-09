@@ -3,7 +3,6 @@ set +e
 
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.2"
-BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
 BUILD_TYPE="dev"
 VERSION_CODE="${BB_VER//v/}"
 VERSION_CODE="${VERSION_CODE//./}"
@@ -23,6 +22,7 @@ TZ="Asia/Makassar"
 NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
 BUILD_LOG="${NDK_PROJECT_PATH}/build.log"
 BUILD_SUCCESS=""
+BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
 
 # Export all variables
 export BB_NAME BB_VER BB_TIME_STAMP BUILD_TYPE BB_BUILDER VERSION_CODE NDK_STABLE NDK_STABLE_VERSION NDK_CANARY NDK_CANARY_LINK RUN_ID ZIP_NAME TZ NDK_PROJECT_PATH BUILD_LOG BUILD_SUCCESS
