@@ -4,7 +4,7 @@ upload_file() {
 	local file_path="$1"
 	local caption="$2"
 
-if [[ -f "$1" ]]; then
+if [[ -f "$file_path" ]]; then
 	if [[ -n $caption ]]; then
 		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
 			-F chat_id="$CHAT_ID" \
@@ -66,8 +66,7 @@ NDK_STABLE_VERSION="r27"
 
 RUN_ID="${GITHUB_RUN_ID:-local}"
 
-VERSION_CODE="${BB_VER//v/}"
-VERSION_CODE="${VERSION_CODE//./}"
+VERSION_CODE="$(echo "$BB_VER" | tr -d 'v.')"
 
 ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
 
@@ -118,9 +117,8 @@ fi
 
 	bash run.sh generate
 
-	"$NDK_PROJECT_PATH/ndk/ndk-build" all -j"$(nproc --all)" && {
+	if $NDK_PROJECT_PATH/ndk/ndk-build all -j$(nproc --all); then
 		git clone --depth=1 https://github.com/eraselk/busybox-template
-		rm "$NDK_PROJECT_PATH/busybox-template/system/xbin/.placeholder"
     
 		cp "$NDK_PROJECT_PATH/libs/arm64-v8a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm64"
 		cp "$NDK_PROJECT_PATH/libs/armeabi-v7a/busybox" "$NDK_PROJECT_PATH/busybox-template/system/xbin/busybox-arm"
@@ -132,7 +130,7 @@ fi
 		zip -r9 "$ZIP_NAME" *
 		mv "$ZIP_NAME" "$NDK_PROJECT_PATH"
 		cd "$NDK_PROJECT_PATH"
-	}
+	fi
 	true
 } | tee -a "${BUILD_LOG}"
 
