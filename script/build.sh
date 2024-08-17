@@ -4,6 +4,7 @@ upload_file() {
 	local file_path="$1"
 	local caption="$2"
 
+if [[ -f "$1" ]]; then
 	if [[ -n $caption ]]; then
 		curl -s -F document=@"$file_path" "https://api.telegram.org/bot${TOKEN}/sendDocument" \
 			-F chat_id="$CHAT_ID" \
@@ -15,6 +16,7 @@ upload_file() {
 			-F "disable_web_page_preview=true" \
 			-F chat_id="$CHAT_ID"
 	fi
+fi
 }
 
 send_msg() {
@@ -131,6 +133,7 @@ fi
 		mv "$ZIP_NAME" "$NDK_PROJECT_PATH"
 		cd "$NDK_PROJECT_PATH"
 	}
+	true
 } | tee -a "${BUILD_LOG}"
 
 if [[ -f "$NDK_PROJECT_PATH/$ZIP_NAME" ]]; then

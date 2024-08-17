@@ -41,6 +41,7 @@ LOCAL_SRC_FILES := \
     selinux/libselinux/src/getenforce.c \
     selinux/libselinux/src/getfilecon.c \
     selinux/libselinux/src/getpeercon.c \
+    selinux/libselinux/src/hashtab.c \
     selinux/libselinux/src/init.c \
     selinux/libselinux/src/is_customizable_type.c \
     selinux/libselinux/src/label.c \
