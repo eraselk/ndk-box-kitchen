@@ -62,7 +62,7 @@ NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-can
 
 # set 'true' if you wanna use the stable version of ndk
 NDK_STABLE=true
-NDK_STABLE_VERSION="r27"
+NDK_STABLE_VERSION="r27b"
 
 RUN_ID="${GITHUB_RUN_ID:-local}"
 
