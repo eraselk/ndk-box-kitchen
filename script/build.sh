@@ -52,8 +52,7 @@ NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
 BB_NAME="Enhanced"
 BB_VER="v1.37.0.2"
 BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
-BUILD_TYPE="dev"
-BUILD_LOG="${NDK_PROJECT_PATH}/build.log"
+BUILD_TYPE="rel"
 
 # set 'true' if you wanna use the canary version of ndk
 NDK_CANARY=false
@@ -107,8 +106,6 @@ elif $NDK_CANARY; then
 	rm ndk-tarball
 	mv android-ndk-* ndk
 fi
-
-{
 	git clone --depth=1 https://github.com/eraselk/busybox
 	git clone --depth=1 https://android.googlesource.com/platform/external/selinux jni/selinux
 	git clone --depth=1 https://android.googlesource.com/platform/external/pcre jni/pcre
@@ -131,12 +128,7 @@ fi
 		mv "$ZIP_NAME" "$NDK_PROJECT_PATH"
 		cd "$NDK_PROJECT_PATH"
 	fi
-	true
-} | tee -a "${BUILD_LOG}"
 
 if [[ -f "$NDK_PROJECT_PATH/$ZIP_NAME" ]]; then
 	upload_file "$NDK_PROJECT_PATH/$ZIP_NAME" "#$BUILD_TYPE #v$VERSION_CODE $(echo -e "\n<b>Build Date: $(date +"%Y-%m-%d %H:%M")</b>")"
-	upload_file "$BUILD_LOG" "Build log"
-else
-	upload_file "$BUILD_LOG" "<b>Build failed</b>"
 fi
