@@ -47,28 +47,24 @@ set_tz_to() {
 
 set_tz_to "Asia/Makassar"
 
-NDK_PROJECT_PATH=$(pwd)
+export NDK_PROJECT_PATH=$(pwd)
 
-BB_NAME="Enhanced"
-BB_VER="v1.37.0.3"
-BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
-BUILD_TYPE="rel"
+export BB_NAME="Enhanced"
+export BB_VER="v1.37.0.3"
+export BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
+export BUILD_TYPE="dev"
 
 # set 'true' if you wanna use the canary version of ndk
-NDK_CANARY=false
+export NDK_CANARY=false
 # TIP: you can replace this ndk canary with your own ndk canary.
-NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
+export NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-canary-20240730/android-ndk-12157319-linux-x86_64.zip"
 
 # set 'true' if you wanna use the stable version of ndk
-NDK_STABLE=true
-NDK_STABLE_VERSION="r27b"
+export NDK_STABLE=true
+export NDK_STABLE_VERSION="r27b"
 
-VERSION_CODE="$(echo "$BB_VER" | tr -d 'v.')"
-
-ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${BB_TIME_STAMP}.zip"
-
-# Export all variables
-export BB_NAME BB_VER BB_TIME_STAMP BUILD_TYPE BB_BUILDER VERSION_CODE NDK_STABLE NDK_STABLE_VERSION NDK_CANARY NDK_CANARY_LINK RUN_ID ZIP_NAME TZ NDK_PROJECT_PATH BUILD_LOG BUILD_SUCCESS
+export VERSION_CODE="$(echo "$BB_VER" | tr -d 'v.')"
+export ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${BB_TIME_STAMP}.zip"
 
 # Check if TOKEN is set
 if [[ -z $TOKEN ]]; then
