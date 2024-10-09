@@ -47,10 +47,10 @@ set_tz_to() {
 
 set_tz_to "Asia/Makassar"
 
-NDK_PROJECT_PATH="/home/runner/work/ndk-box-kitchen/ndk-box-kitchen"
+NDK_PROJECT_PATH=$(pwd)
 
 BB_NAME="Enhanced"
-BB_VER="v1.37.0.2"
+BB_VER="v1.37.0.3"
 BB_TIME_STAMP="$(date +%Y%m%d%H%M)"
 BUILD_TYPE="rel"
 
@@ -63,11 +63,9 @@ NDK_CANARY_LINK="https://github.com/eraselk/ndk-canary/releases/download/r28-can
 NDK_STABLE=true
 NDK_STABLE_VERSION="r27b"
 
-RUN_ID="${GITHUB_RUN_ID:-local}"
-
 VERSION_CODE="$(echo "$BB_VER" | tr -d 'v.')"
 
-ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${RUN_ID}.zip"
+ZIP_NAME="${BB_NAME}-BusyBox-${BB_VER}-${BB_TIME_STAMP}.zip"
 
 # Export all variables
 export BB_NAME BB_VER BB_TIME_STAMP BUILD_TYPE BB_BUILDER VERSION_CODE NDK_STABLE NDK_STABLE_VERSION NDK_CANARY NDK_CANARY_LINK RUN_ID ZIP_NAME TZ NDK_PROJECT_PATH BUILD_LOG BUILD_SUCCESS
